@@ -90,5 +90,5 @@ for i in range (rang):
                 fl[5]=fl[5]+1
             break
 print(fl)
-f2 = open ( './data/trend_200_si.txt' , 'wb')
+f2 = open ( './data/sl_200_si.txt' , 'wb')
 np.savetxt(f2, z,fmt='%f', delimiter=',',newline='\r\n')

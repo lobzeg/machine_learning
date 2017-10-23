@@ -19,10 +19,10 @@ def main():
     r3=5000
     rand_runs=2
 
-    f1 = open( './data/generated_new_si.txt' , 'r')
+    f1 = open( './data/extended_new_si.txt' , 'r')
     l = np.loadtxt(f1, dtype='f', delimiter=',')
 
-    f2 = open( './data/trend_200_si.txt' , 'r')
+    f2 = open( './data/sl_200_si.txt' , 'r')
     m = np.loadtxt(f2, dtype='f', delimiter=',')
     #m=np.delete(m, 0, 1)
     #m=np.delete(m, 0, 1)
