@@ -6,8 +6,8 @@ NUMP=8
 
 # Creates and evaluate a generation of GA
 def new_generation(gp, data, check_data, start, length, stagnation, number_of_iterations):
-    k1 = max([5 + stagnation * 2, 70])
-    k2 = max([1 + stagnation * 3, 80])
+    k1 = max([5 + stagnation * 2, 200])
+    k2 = max([1 + stagnation * 3, 200])
     stagnation = stagnation + 3
     
 
@@ -36,21 +36,21 @@ def new_generation(gp, data, check_data, start, length, stagnation, number_of_it
 
     return new_gp, stagnation
 
-# mutation function for regular matrices
+# mutation function for matrices
 def mutate_matrix(main_matrix, mutation_source_matrix, k1, k2):
     main_matrix = np.copy(main_matrix)
 
-    for i in range(max(0, int(np.random.normal(k1, k1/5)))):
+    for i in range(max(0, int(main_matrix.shape[1] * np.random.normal(k1, k1/5) / 500))):
         a = np.random.randint(main_matrix.shape[1])
         for j in range(main_matrix.shape[0]):
             main_matrix[j, a] = mutation_source_matrix[j, a]
 
-    for i in range(max(0, int(np.random.normal(k1, k1/5)))):
+    for i in range(max(0, int(main_matrix.shape[0] * np.random.normal(k1, k1/5) / 500))):
         a = np.random.randint(main_matrix.shape[0])
         for j in range(main_matrix.shape[1]):
             main_matrix[a, j] = mutation_source_matrix[a, j]
 
-    for i in range(max(0, int(np.random.normal(k2, k2/5)))):
+    for i in range(max(0, int(np.prod(main_matrix.shape) * np.random.normal(k2, k2/5) / 500))):
         main_matrix[np.random.randint(main_matrix.shape[0]), np.random.randint(
             main_matrix.shape[1])] = np.random.uniform(-1, 1)
 
@@ -60,11 +60,11 @@ def mutate_matrix(main_matrix, mutation_source_matrix, k1, k2):
 def mutate_vector(main_vector, mutation_source_vector, k1, k2):
     main_vector = np.copy(main_vector)
 
-    for i in range(max(0, int(np.random.normal(k1, k1/5)))):
+    for i in range(max(0, int(main_vector.shape[0] * np.random.normal(k1, k1/5) / 500))):
         a = np.random.randint(main_vector.shape[0])
         main_vector[a] = mutation_source_vector[a]
 
-    for i in range(max(0, int(np.random.normal(k2, k2/5)))):
+    for i in range(max(0, int(main_vector.shape[0] * np.random.normal(k2, k2/5) / 500))):
         main_vector[np.random.randint(main_vector.shape[0])] = np.random.normal()
 
     return main_vector
