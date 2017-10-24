@@ -1,6 +1,7 @@
 import numpy as np
 
-
+# class of results of different evaluation functions
+# best networks for each function are kept in the gene pool
 class Result:
 
     def __init__(self):
@@ -37,20 +38,22 @@ class NeuralNetwork:
         b4 = np.copy(self.b4)
 
         return NeuralNetwork(w1, w2, w3, w4, b1, b2, b3, b4)
-
+    
+    # evaluates performance of neural network 
+    # by checking how well it would trade on the testing period
     def evaluate(self, data, check_data, start, length):
         result = Result()
 
         max_profit = 0
         drawdown = 0
         for i in range(start, start + length):
-            # Run neural network
+            # run neural network
             y1 = np.matmul(data[i], self.w1.compose()) + self.b1
             y2 = np.matmul(y1, self.w2.compose()) + self.b2
             y3 = np.matmul(y2, self.w3) + self.b3
             y4 = np.matmul(y3, self.w4) + self.b4
 
-            # Normalize output
+            # normalize output
             d = max(y4)
             y4[0] -= d
             y4[1] -= d
@@ -60,7 +63,7 @@ class NeuralNetwork:
 
             mult = 4
 
-            # Buy the stock
+            # buy the stock
             if y4[0] > y4[1] and y4[0] > y4[2]:
                 deal_outcome = check_data[i + 19, 0]
                 result.simple = result.simple + deal_outcome
@@ -77,11 +80,10 @@ class NeuralNetwork:
 
                 if max_profit - result.adjusted > drawdown:
                     drawdown = max_profit - result.adjusted
-
                 if result.adjusted > max_profit:
                     max_profit = result.adjusted
 
-            # Sell the stock
+            # sell the stock
             if y4[1] > y4[0] and y4[1] > y4[2]:
                 deal_outcome = check_data[i + 19, 0]
                 result.simple = result.simple + deal_outcome
@@ -98,10 +100,10 @@ class NeuralNetwork:
 
                 if max_profit - result.adjusted > drawdown:
                     drawdown = max_profit - result.adjusted
-
                 if result.adjusted > max_profit:
                     max_profit = result.adjusted
 
+        # adjusts result to drawdown
         if drawdown > 0:
             result.adjusted = result.adjusted / max([1, drawdown / 1000])
 

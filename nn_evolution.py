@@ -4,14 +4,16 @@ from NeuralNetwork import NeuralNetwork
 
 NUMP=8
 
+# Creates and evaluate a generation of GA
 def new_generation(gp, data, check_data, start, length, stagnation, number_of_iterations):
     k1 = max([5 + stagnation * 2, 70])
     k2 = max([1 + stagnation * 3, 80])
     stagnation = stagnation + 3
-    #f = np.zeros(nump)
+    
 
     pl = gp.get_population_list()
     new_gp = gp.clone()
+
 
     for i in range(number_of_iterations):
         if i % 100 == 0:
@@ -34,7 +36,7 @@ def new_generation(gp, data, check_data, start, length, stagnation, number_of_it
 
     return new_gp, stagnation
 
-
+# mutation function for regular matrices
 def mutate_matrix(main_matrix, mutation_source_matrix, k1, k2):
     main_matrix = np.copy(main_matrix)
 
@@ -54,7 +56,7 @@ def mutate_matrix(main_matrix, mutation_source_matrix, k1, k2):
 
     return main_matrix
 
-
+# mutation function for vectors
 def mutate_vector(main_vector, mutation_source_vector, k1, k2):
     main_vector = np.copy(main_vector)
 
@@ -67,7 +69,7 @@ def mutate_vector(main_vector, mutation_source_vector, k1, k2):
 
     return main_vector
 
-
+# breeding function for block diagonal matrices (w1 and w2)
 def crossover_block_diagonal_matrix(pl, name, k1, k2):
     matrices = []
 
@@ -80,14 +82,14 @@ def crossover_block_diagonal_matrix(pl, name, k1, k2):
 
     return BlockDiagonalMatrix(getattr(nn1, name).width, getattr(nn1, name).height, matrices)
 
-
+# breeding function for regular matrices
 def crossover_matrix(pl, name, k1, k2):
     nn1 = pl.get_random_nn()
     nn2 = pl.get_random_nn()
 
     return mutate_matrix(getattr(nn1, name), getattr(nn2, name), k1, k2)
 
-
+# breeding function for vectors
 def crossover_bias_vector(pl, name, k1, k2):
     nn1 = pl.get_random_nn()
     nn2 = pl.get_random_nn()

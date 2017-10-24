@@ -6,7 +6,8 @@ from NeuralNetwork import NeuralNetwork
 
 SELECTION_SIZE = 10
 
-
+# auxiliary class for insertion of neural networks
+# with best results into gene pool
 class BisectKeyWrapper:
 
     def __init__(self, iterable, key):
@@ -37,6 +38,8 @@ class GenePool:
 
         self.population = population
 
+    # compares results of a nn to results of networks currently in the gene pool
+    # and inserts it into gene pool if it is good enough 
     def put(self, nn, result):
         #print(1)
         stagnation=0
@@ -53,10 +56,7 @@ class GenePool:
             if index == 0:
                 stagnation -= 1
 
-
-            
-
-        return stagnation  # @@
+        return stagnation
 
     def clone(self):
         population = {}
@@ -76,18 +76,19 @@ class GenePool:
 
         return PopulationList(population)
 
-
+# the list of neural networks currently in the gene pool
 class PopulationList:
 
     def __init__(self, population):
         self.population = population
 
+    # selects random nn out of the gene pool
     def get_random_nn(self):
         index = np.random.randint(len(self.population))
 
         return self.population[index]
 
-
+# function for random generation of pseudo block diagonal matrices
 def random_block_diagonal_matrix(number_of_parameters, width, height):
     matrices = []
 
@@ -105,7 +106,7 @@ def random_block_diagonal_matrix(number_of_parameters, width, height):
 
     return BlockDiagonalMatrix(width, height, matrices)
 
-
+# generates gene pool by selecting the best out of randomly generating networks
 def generate_gene_pool(data, check_data, start, length, inp, h1, h2, h3, o, number_of_iterations, number_of_parameters):
     gp = GenePool()
     

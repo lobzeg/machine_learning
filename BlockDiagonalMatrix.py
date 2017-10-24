@@ -1,6 +1,8 @@
 import numpy as np
 
-
+#class of pseudo block diagonal matrices
+#provides separate processing of inputs of different types
+#at the first 2 layers of neural network
 class BlockDiagonalMatrix:
 
     def __init__(self, width, height, matrices):
@@ -15,7 +17,8 @@ class BlockDiagonalMatrix:
             matrices.append(np.copy(matrix))
 
         return BlockDiagonalMatrix(self.width, self.height, matrices)
-
+    
+    #composes the weight matrix out of the smaller ones (blocks) 
     def compose(self):
         w = np.zeros([self.width, self.height])
 

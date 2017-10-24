@@ -18,14 +18,14 @@ def main():
     length = 5000
     rand_runs = 2
 
-    # Load data
+    # load data
     f1 = open('./data/extended_new_si.txt', 'r')
     data = np.loadtxt(f1, dtype='f', delimiter=',')
 
     f2 = open('./data/sl_200_si.txt', 'r')
     check_data = np.loadtxt(f2, dtype='f', delimiter=',')
 
-    # Generate original gene pool
+    # generate original gene pool
     gp = generate_gene_pool(data, check_data, start, length,
                             inp, h1, h2, h3, o, rand_runs * number_of_iterations, number_of_parameters)
 
@@ -40,14 +40,6 @@ def main():
     save_nn(gp.population['sell'][0][1],'sell')
 
 def save_nn(nn, name):
-    #for i, matrix in enumerate(nn.w1.matrices):
-    #    np.savetxt('./result/' + name + '.w1' + i + '.txt', matrix,
-    #               fmt='%f', delimiter=',', newline='\r\n')
-
-    #for i, matrix in enumerate(nn.w2.matrices):
-    #    np.savetxt('./result/' + name + '.w2' + i + '.txt', matrix,
-    #               fmt='%f', delimiter=',', newline='\r\n')
-
     np.savetxt('./result/' + name + '.w1.txt', nn.w1.compose(),
                fmt='%f', delimiter=',', newline='\r\n')
 
