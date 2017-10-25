@@ -1,6 +1,6 @@
 import numpy as np
-from BlockDiagonalMatrix import BlockDiagonalMatrix
-from NeuralNetwork import NeuralNetwork
+from block_diagonal_matrix import BlockDiagonalMatrix
+from neural_network import NeuralNetwork
 
 NUMP=8
 

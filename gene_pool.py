@@ -1,7 +1,7 @@
 from bisect import bisect_left
 import numpy as np
-from BlockDiagonalMatrix import BlockDiagonalMatrix
-from NeuralNetwork import NeuralNetwork
+from block_diagonal_matrix import BlockDiagonalMatrix
+from neural_network import NeuralNetwork
 
 
 SELECTION_SIZE = 10

@@ -1,5 +1,5 @@
 import numpy as np
-from GenePool import generate_gene_pool
+from gene_pool import generate_gene_pool
 from nn_evolution import new_generation
 
 
